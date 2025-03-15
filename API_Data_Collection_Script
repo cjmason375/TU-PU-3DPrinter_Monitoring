@@ -1,0 +1,106 @@
+<html>
+<head>
+<title>API Data Collection.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+.s5 { color: #5f826b; font-style: italic;}
+.s6 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+API Data Collection.py</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">os</span>
+<span class="s0">import </span><span class="s1">csv</span>
+<span class="s0">import </span><span class="s1">requests</span>
+<span class="s0">import </span><span class="s1">datetime</span>
+<span class="s0">import </span><span class="s1">time</span>
+<span class="s0">from </span><span class="s1">xml</span><span class="s2">.</span><span class="s1">etree </span><span class="s0">import </span><span class="s1">ElementTree </span><span class="s0">as </span><span class="s1">ET</span>
+<span class="s0">def </span><span class="s1">create_dir</span><span class="s2">(</span><span class="s1">directory</span><span class="s2">):</span>
+    <span class="s0">try</span><span class="s2">:</span>
+        <span class="s0">if not </span><span class="s1">os</span><span class="s2">.</span><span class="s1">path</span><span class="s2">.</span><span class="s1">exists</span><span class="s2">(</span><span class="s1">directory</span><span class="s2">):</span>
+            <span class="s1">print</span><span class="s2">(</span><span class="s3">&quot;Current directory:&quot;</span><span class="s2">, </span><span class="s1">directory</span><span class="s2">)</span>
+            <span class="s1">os</span><span class="s2">.</span><span class="s1">makedirs</span><span class="s2">(</span><span class="s1">directory</span><span class="s2">)</span>
+    <span class="s0">except </span><span class="s1">OSError</span><span class="s2">:</span>
+        <span class="s1">print</span><span class="s2">(</span><span class="s3">&quot;Error: Creating directory. &quot;</span><span class="s2">+ </span><span class="s1">directory</span><span class="s2">)</span>
+<span class="s0">def </span><span class="s1">get_mtconnect_data</span><span class="s2">(</span><span class="s1">url</span><span class="s2">, </span><span class="s1">retries</span><span class="s2">=</span><span class="s4">5</span><span class="s2">, </span><span class="s1">delay</span><span class="s2">=</span><span class="s4">5</span><span class="s2">):</span>
+    <span class="s5">&quot;&quot;&quot;method to get MTConnect data with exception&quot;&quot;&quot;</span>
+    <span class="s0">for </span><span class="s1">attempt </span><span class="s0">in </span><span class="s1">range</span><span class="s2">(</span><span class="s1">retries</span><span class="s2">):</span>
+        <span class="s0">try</span><span class="s2">:</span>
+            <span class="s1">response </span><span class="s2">= </span><span class="s1">requests</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">url</span><span class="s2">)</span>
+            <span class="s1">response</span><span class="s2">.</span><span class="s1">raise_for_status</span><span class="s2">()  </span><span class="s6">#raise error if happens..</span>
+            <span class="s0">return </span><span class="s1">response</span><span class="s2">.</span><span class="s1">content</span>
+        <span class="s0">except </span><span class="s1">requests</span><span class="s2">.</span><span class="s1">exceptions</span><span class="s2">.</span><span class="s1">RequestException </span><span class="s0">as </span><span class="s1">e</span><span class="s2">:</span>
+            <span class="s1">print</span><span class="s2">(</span><span class="s3">f&quot;Request failed: </span><span class="s0">{</span><span class="s1">e</span><span class="s0">}</span><span class="s3">. Retrying in </span><span class="s0">{</span><span class="s1">delay</span><span class="s0">} </span><span class="s3">seconds... (Attempt </span><span class="s0">{</span><span class="s1">attempt</span><span class="s2">+</span><span class="s4">1</span><span class="s0">}</span><span class="s3">/</span><span class="s0">{</span><span class="s1">retries</span><span class="s0">}</span><span class="s3">)&quot;</span><span class="s2">)</span>
+            <span class="s1">time</span><span class="s2">.</span><span class="s1">sleep</span><span class="s2">(</span><span class="s1">delay</span><span class="s2">)</span>
+    <span class="s1">print</span><span class="s2">(</span><span class="s3">f&quot;Failed to retrieve data after </span><span class="s0">{</span><span class="s1">retries</span><span class="s0">} </span><span class="s3">attempts.&quot;</span><span class="s2">)</span>
+    <span class="s0">return None</span>
+
+
+
+<span class="s0">if </span><span class="s1">__name__ </span><span class="s2">== </span><span class="s3">&quot;__main__&quot;</span><span class="s2">:</span>
+    <span class="s1">agent </span><span class="s2">= </span><span class="s3">&quot;10.114.4.110:5000&quot;</span>
+    <span class="s1">print</span><span class="s2">(</span><span class="s1">datetime</span><span class="s2">.</span><span class="s1">datetime</span><span class="s2">.</span><span class="s1">now</span><span class="s2">(), </span><span class="s3">&quot;MTConnect-current csv collection started...&quot;</span><span class="s2">)</span>
+    <span class="s1">now </span><span class="s2">= </span><span class="s1">datetime</span><span class="s2">.</span><span class="s1">datetime</span><span class="s2">.</span><span class="s1">now</span><span class="s2">(</span><span class="s1">datetime</span><span class="s2">.</span><span class="s1">timezone</span><span class="s2">.</span><span class="s1">utc</span><span class="s2">)</span>
+    <span class="s1">now_ts </span><span class="s2">= </span><span class="s1">now</span><span class="s2">.</span><span class="s1">strftime</span><span class="s2">(</span><span class="s3">&quot;%Y%m%d_%H%M%S.%fz&quot;</span><span class="s2">)</span>
+    <span class="s0">while True</span><span class="s2">:</span>
+        <span class="s1">path </span><span class="s2">= </span><span class="s3">&quot;/Users/dee-dee/Purdue/PycharmProjects/MTC/&quot;</span>
+        <span class="s1">directory </span><span class="s2">= </span><span class="s1">path</span><span class="s2">+</span><span class="s3">&quot;API data collection/mtconnect&quot;</span>
+        <span class="s1">create_dir</span><span class="s2">(</span><span class="s1">directory</span><span class="s2">) </span><span class="s6">#if not exist, create the working directory where the CSV files will be located</span>
+        <span class="s1">os</span><span class="s2">.</span><span class="s1">chdir</span><span class="s2">(</span><span class="s1">directory</span><span class="s2">)</span>
+        <span class="s1">url_current </span><span class="s2">= </span><span class="s3">&quot;http://&quot; </span><span class="s2">+ </span><span class="s1">agent </span><span class="s2">+ </span><span class="s3">&quot;/current&quot; </span><span class="s6"># current Request</span>
+        <span class="s6"># get MTConnect data</span>
+        <span class="s1">mtconnect_content </span><span class="s2">= </span><span class="s1">get_mtconnect_data</span><span class="s2">(</span><span class="s1">url_current</span><span class="s2">)</span>
+        <span class="s0">if </span><span class="s1">mtconnect_content </span><span class="s0">is None</span><span class="s2">:</span>
+            <span class="s6"># if fail, retry loop</span>
+            <span class="s0">continue</span>
+        <span class="s0">try</span><span class="s2">:</span>
+            <span class="s1">MTCONNECT_STR </span><span class="s2">= </span><span class="s1">ET</span><span class="s2">.</span><span class="s1">fromstring</span><span class="s2">(</span><span class="s1">mtconnect_content</span><span class="s2">).</span><span class="s1">tag</span><span class="s2">.</span><span class="s1">split</span><span class="s2">(</span><span class="s3">&quot;}&quot;</span><span class="s2">)[</span><span class="s4">0</span><span class="s2">] + </span><span class="s3">&quot;}&quot;</span>
+        <span class="s0">except </span><span class="s1">ET</span><span class="s2">.</span><span class="s1">ParseError </span><span class="s0">as </span><span class="s1">e</span><span class="s2">:</span>
+            <span class="s1">print</span><span class="s2">(</span><span class="s3">f&quot;XML parsing failed: </span><span class="s0">{</span><span class="s1">e</span><span class="s0">}</span><span class="s3">. Skipping this iteration.&quot;</span><span class="s2">)</span>
+            <span class="s1">time</span><span class="s2">.</span><span class="s1">sleep</span><span class="s2">(</span><span class="s4">5</span><span class="s2">) </span><span class="s6">#retry after time sleep</span>
+            <span class="s0">continue</span>
+        <span class="s1">now </span><span class="s2">= </span><span class="s1">datetime</span><span class="s2">.</span><span class="s1">datetime</span><span class="s2">.</span><span class="s1">now</span><span class="s2">(</span><span class="s1">datetime</span><span class="s2">.</span><span class="s1">timezone</span><span class="s2">.</span><span class="s1">utc</span><span class="s2">)</span>
+        <span class="s1">ts </span><span class="s2">= </span><span class="s1">now</span><span class="s2">.</span><span class="s1">strftime</span><span class="s2">(</span><span class="s3">&quot;%Y-%m-%d %H:%M:%S.%fz&quot;</span><span class="s2">)</span>
+        <span class="s1">d </span><span class="s2">= {</span><span class="s3">&quot;timestamp&quot;</span><span class="s2">: </span><span class="s1">ts</span><span class="s2">} </span><span class="s6"># data dictionary</span>
+        <span class="s1">root </span><span class="s2">= </span><span class="s1">ET</span><span class="s2">.</span><span class="s1">fromstring</span><span class="s2">(</span><span class="s1">mtconnect_content</span><span class="s2">)</span>
+        <span class="s6"># XML parsing</span>
+        <span class="s0">for </span><span class="s1">device </span><span class="s0">in </span><span class="s1">root</span><span class="s2">.</span><span class="s1">iter</span><span class="s2">(</span><span class="s1">MTCONNECT_STR </span><span class="s2">+ </span><span class="s3">&quot;DeviceStream&quot;</span><span class="s2">):</span>
+            <span class="s1">uuid </span><span class="s2">= </span><span class="s1">device</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s3">'uuid'</span><span class="s2">)</span>
+            <span class="s1">filename </span><span class="s2">= </span><span class="s3">&quot;_&quot;</span><span class="s2">.</span><span class="s1">join</span><span class="s2">([</span><span class="s1">now_ts</span><span class="s2">, </span><span class="s1">uuid</span><span class="s2">]) + </span><span class="s3">&quot;.csv&quot;  </span><span class="s6"># YYYYmmdd_machineuuid.csv</span>
+            <span class="s0">try</span><span class="s2">:</span>
+                <span class="s0">with </span><span class="s1">open</span><span class="s2">(</span><span class="s1">filename</span><span class="s2">, </span><span class="s3">'a'</span><span class="s2">) </span><span class="s0">as </span><span class="s1">csvfile</span><span class="s2">:</span>
+                    <span class="s0">for </span><span class="s1">event </span><span class="s0">in </span><span class="s1">device</span><span class="s2">.</span><span class="s1">iter</span><span class="s2">(</span><span class="s1">MTCONNECT_STR </span><span class="s2">+</span><span class="s3">&quot;Events&quot;</span><span class="s2">):</span>
+                        <span class="s0">for </span><span class="s1">elem </span><span class="s0">in </span><span class="s1">event</span><span class="s2">:</span>
+                            <span class="s1">dId </span><span class="s2">= </span><span class="s1">elem</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s3">&quot;dataItemId&quot;</span><span class="s2">)  </span><span class="s6">#data item id</span>
+                            <span class="s1">text </span><span class="s2">= </span><span class="s1">elem</span><span class="s2">.</span><span class="s1">text</span><span class="s2">.</span><span class="s1">replace</span><span class="s2">(</span><span class="s3">&quot;,&quot;</span><span class="s2">, </span><span class="s3">&quot; &quot;</span><span class="s2">)  </span><span class="s6">#replace , to space.</span>
+                            <span class="s1">d</span><span class="s2">[</span><span class="s1">dId</span><span class="s2">] = </span><span class="s1">text  </span><span class="s6"># {dataItemId:value} pairs adding all events</span>
+                    <span class="s0">for </span><span class="s1">sample </span><span class="s0">in </span><span class="s1">device</span><span class="s2">.</span><span class="s1">iter</span><span class="s2">(</span><span class="s1">MTCONNECT_STR </span><span class="s2">+ </span><span class="s3">&quot;Samples&quot;</span><span class="s2">):</span>
+                        <span class="s0">for </span><span class="s1">elem </span><span class="s0">in </span><span class="s1">sample</span><span class="s2">:</span>
+                            <span class="s1">dId </span><span class="s2">= </span><span class="s1">elem</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s3">&quot;dataItemId&quot;</span><span class="s2">)  </span><span class="s6"># data item id</span>
+                            <span class="s1">d</span><span class="s2">[</span><span class="s1">dId</span><span class="s2">] = </span><span class="s1">elem</span><span class="s2">.</span><span class="s1">text</span>
+                    <span class="s0">for </span><span class="s1">condition </span><span class="s0">in </span><span class="s1">device</span><span class="s2">.</span><span class="s1">iter</span><span class="s2">(</span><span class="s1">MTCONNECT_STR </span><span class="s2">+ </span><span class="s3">&quot;Condition&quot;</span><span class="s2">):</span>
+                        <span class="s0">for </span><span class="s1">elem </span><span class="s0">in </span><span class="s1">condition</span><span class="s2">:</span>
+                            <span class="s1">d</span><span class="s2">[</span><span class="s1">elem</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s3">&quot;dataItemId&quot;</span><span class="s2">)] = </span><span class="s1">elem</span><span class="s2">.</span><span class="s1">tag</span><span class="s2">.</span><span class="s1">replace</span><span class="s2">(</span><span class="s1">MTCONNECT_STR</span><span class="s2">, </span><span class="s3">&quot;&quot;</span><span class="s2">)</span>
+                    <span class="s1">field_name </span><span class="s2">= </span><span class="s1">list</span><span class="s2">(</span><span class="s1">d</span><span class="s2">.</span><span class="s1">keys</span><span class="s2">())</span>
+                    <span class="s1">writer </span><span class="s2">= </span><span class="s1">csv</span><span class="s2">.</span><span class="s1">DictWriter</span><span class="s2">(</span><span class="s1">csvfile</span><span class="s2">, </span><span class="s1">delimiter</span><span class="s2">= </span><span class="s3">','</span><span class="s2">, </span><span class="s1">lineterminator</span><span class="s2">=</span><span class="s3">'</span><span class="s0">\n</span><span class="s3">'</span><span class="s2">, </span><span class="s1">fieldnames</span><span class="s2">=</span><span class="s1">field_name</span><span class="s2">)</span>
+                    <span class="s0">if </span><span class="s1">os</span><span class="s2">.</span><span class="s1">stat</span><span class="s2">(</span><span class="s1">filename</span><span class="s2">).</span><span class="s1">st_size </span><span class="s2">== </span><span class="s4">0</span><span class="s2">:  </span><span class="s6"># if file exists, pass to generate header</span>
+                        <span class="s1">writer</span><span class="s2">.</span><span class="s1">writeheader</span><span class="s2">()</span>
+                    <span class="s1">writer</span><span class="s2">.</span><span class="s1">writerow</span><span class="s2">(</span><span class="s1">d</span><span class="s2">)  </span><span class="s6"># insert a new row</span>
+                    <span class="s1">print</span><span class="s2">(</span><span class="s1">d</span><span class="s2">)  </span><span class="s6"># to check</span>
+                <span class="s6"># print(f&quot;{ts} writing in {filename} done...&quot;)</span>
+            <span class="s0">except </span><span class="s1">OSError </span><span class="s0">as </span><span class="s1">e</span><span class="s2">: </span><span class="s6">#if writing error happens...</span>
+                <span class="s1">print</span><span class="s2">(</span><span class="s3">f&quot;Error writing to file </span><span class="s0">{</span><span class="s1">filename</span><span class="s0">}</span><span class="s3">: </span><span class="s0">{</span><span class="s1">e</span><span class="s0">}</span><span class="s3">&quot;</span><span class="s2">)</span>
+                <span class="s1">time</span><span class="s2">.</span><span class="s1">sleep</span><span class="s2">(</span><span class="s4">1</span><span class="s2">)  </span><span class="s6">#try after 1 sec.</span>
+        <span class="s1">time</span><span class="s2">.</span><span class="s1">sleep</span><span class="s2">(</span><span class="s4">1</span><span class="s2">)</span>
+</pre>
+</body>
+</html>
