@@ -32,9 +32,9 @@ This repository documents the necessary background, procedures, and code to cond
 
   A custom MTConnect information model was developed to collect and structure the data and extend MTConnect usage to 3D printers and external sensors. Listed are links to the code for each Adapter, as well as the Agent - these code snippets should be run on the Raspberry Pi. (verify?)
 
-  3D Printer Machine Data Script - 
-  Camera Collection Script -
-  Sound Collection Script -
+  [3D Printer Machine Data Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/API_Data_Collection_Script)
+  [Camera Collection Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/Camera_Script)
+  [Sound Collection Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/Sound_Collect_Script)
 
 
 
