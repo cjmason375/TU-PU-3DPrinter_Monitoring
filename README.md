@@ -30,11 +30,12 @@ This repository documents the necessary background, procedures, and code to cond
 
   *(In the paper, it was mentioned that "details of the MTConnect Information Model (Device.XML) and its development are listed in the Repository, so Eunseob should add onto this with whatever information he feels necessary")*
 
-  A custom MTConnect information model was developed to collect and structure the data and extend MTConnect usage to 3D printers and external sensors. Listed are links to the code for each Adapter, as well as the Agent.
+  A custom MTConnect information model was developed to collect and structure the data and extend MTConnect usage to 3D printers and external sensors. Listed are links to the code for each Adapter, as well as the Agent - these code snippets should be run on the Raspberry Pi. (verify?)
 
+  3D Printer Machine Data Script - 
+  Camera Collection Script -
+  Sound Collection Script -
 
-
-[link the code here!]
 
 
 ### *COLLECTING DATA*
