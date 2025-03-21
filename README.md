@@ -24,17 +24,39 @@ This repository documents the necessary background, procedures, and code to cond
 
   A Raspberry Pi (served as an edge computer?) for this case study and was necessary to connect the sensors and also to deploy the MTConnect framework on.
 
+
+
+
+  
+
 ### *SETTING UP MTCONNECT*
 
   MTConnect operates based off of two major components: the ***Adapter*** and the ***Agent***. The ***Adapter*** collects the data from the machine and/or sensors, converts it into a text dictionary, and passes that dictionary along to the Agent. In the case study, each data group had its own adapter; a 3D printer adapter that utilized the Swagger API to convert status variables into a MTConnect-compliant format, a current transformer adapter for collecting current data, and a sound stream adapter for collecting sound data. The ***Agent*** takes the dictionary from the Adapter, formats it into a XML stream, and makes that data available on the cloud. In our case study, the Agent uses a HTTP-based REST communication standard. Then, the operator can utilize ***applications*** to fully utilize the MTConnect framework, such as accessing monitoring systems or analytics platforms for conducting further processing and visualization.
 
   *(In the paper, it was mentioned that "details of the MTConnect Information Model (Device.XML) and its development are listed in the Repository, so Eunseob should add onto this with whatever information he feels necessary")*
 
-  A custom MTConnect information model was developed to collect and structure the data and extend MTConnect usage to 3D printers and external sensors. Listed are links to the code for each Adapter, as well as the Agent - these code snippets should be run on the Raspberry Pi. (verify?)
+  
 
-  [3D Printer Machine Data Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/API_Data_Collection_Script)
-  [Camera Collection Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/Camera_Script)
-  [Sound Collection Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/Sound_Collect_Script)
+  A custom MTConnect information model was developed to collect and structure data and extend MTConnect usage to 3D printers and external sensors. To set up MTConnect on your system, you must run three Python scripts on the collection computer (in the study's case, this was a Windows desktop computer) to set up XML documents. A Purdue researcher on our team personally developed these data device models.
+  
+  
+  
+  the following Python scripts are to be run on the Raspberry Pi to collect data. Utilizing a platform that allows VNC or SSH interfacing with the Raspberry Pi reduces the need for an external monitor for the Pi and allows you to control the Pi's interface from another computer. For this study, we used "VNC Viewer", set a static IP address for the Raspberry Pi, and set up the platform using that IP address. 
+
+  (put RPi scripts here once they are uploaded to the GitHub)
+
+  
+  
+  
+  
+  Listed are links to the code for each Adapter, as well as the Agent - these code snippets should be run on the Raspberry Pi. (verify?)
+
+1)  [3D Printer Machine Data Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/API_Data_Collection_Script) <br>
+2)  [Camera Collection Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/Camera_Script) <br>
+3)  [Sound Collection Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/Sound_Collect_Script) <br>
+
+
+
 
 
 
