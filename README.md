@@ -27,15 +27,27 @@ This repository documents the necessary background, procedures, and code to cond
 
   MTConnect operates based off of two major components: [the ***Adapter*** and the ***Agent***](https://www.mmsonline.com/articles/understanding-mtconnect-agents-and-adapters). {{{The ***Adapter*** collects the data from the machine and/or sensors, converts it into a text dictionary, and passes that dictionary along to the Agent. In other words, it allows the machines to speak in the MTConnect language. In the case study, each data group had its own adapter; a 3D printer adapter that utilized the Swagger API to convert status variables into a MTConnect-compliant format, a current transformer adapter for collecting current data, and a sound stream adapter for collecting sound data. The ***Agent*** takes the dictionary from the Adapter, formats it into a XML stream, and makes that data available on the cloud. In our case study, the Agent uses a HTTP-based REST communication standard. Then, the operator can utilize ***applications*** to fully utilize the MTConnect framework, such as accessing monitoring systems or analytics platforms for conducting further processing and visualization.}}}
 
+
 #### *3.1) Developing "Device_xml" Data Information Model*
 
-  A Data Information Model takes the information from the Agent and conceptually represents the data's relationships. For the 3D printer's case, the "Device_xml" data information model was created to  elements of an operation's process at the same timestamp into a single file. Primarily, electrical, thermal, and mechanical state variables were utilized in this information model.
+  A Data Information Model takes the information from the Agent and conceptually represents the data's relationships. For the 3D printer's case, the "Device_xml" data information model was created to centralize elements of an operation's process at the same timestamp into a single file. Primarily, electrical, thermal, and mechanical state variables were utilized in this information model.
+ 
+ The collected data was combined and put into the XML file format. This file defined the types of data each measuring device collects, along with the frequency and units of that collection. Because 3D printing device XML files are uncommon, categorization and filtering was done to determine a) Which variables can be collected by the printer or additional IoT devices, and b) Which variables would prove valuable for analysis. After determining these prevalent datapoints from the printer API and the additional sensors of the microphone and current transducer, they were fed into the xml file as an element tree. Through this formatting, additional components can be interconnected and expand the analytic capabilities; a cognizance is required in understanding the format of the data to be included and the required formatting for it.
 
+
+<br>
+<br>
+ To access the Device_xml device, follow this process:
+
+ 1) (idk the process so that needs to be inserted)
+
+<br>
+<br>
   
   
-  Currently, MTConnect does not support a method to incorporate JPG images into the model, so those had to be collected individually. As well, the collected sound data had an independent adapter as continous sound collection alongside the other ongoing processes has the potential to overload the Raspberry Pi.
+  Currently, MTConnect does not support a method to incorporate JPG images into the model, so those had to be collected individually using the command (what is the command????). As well, continous sound collection alongside the other ongoing processes has the potential to overload the collection stream and cause errors in collecting other variables. Therefore, the collected audio stream had an independent adapter designated to a seperate device port of the same IP address. For the study, the MTConnect Adapter was housed on port 5000 and the Sound Adapter was housed on port 5001. 
 
-
+  For each stream of data (Visual, Audio, etc.), clients may be required for the proper formatting of the resulting data. These clients are responsible for the collection, formatting, and/or analysis of data from these devices. For each form of data, a specific set of middleware is required, depending on the final state of data analysis desired.  
 
 
 #### 4) *COLLECTING DATA*
