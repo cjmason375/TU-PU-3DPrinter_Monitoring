@@ -34,14 +34,7 @@ This repository documents the necessary background, procedures, and code to cond
  
  The collected data was combined and put into the XML file format. This file defined the types of data each measuring device collects, along with the frequency and units of that collection. Because 3D printing device XML files are uncommon, categorization and filtering was done to determine a) Which variables can be collected by the printer or additional IoT devices, and b) Which variables would prove valuable for analysis. After determining these prevalent datapoints from the printer API and the additional sensors of the microphone and current transducer, they were fed into the xml file as an element tree. Through this formatting, additional components can be interconnected and expand the analytic capabilities; a cognizance is required in understanding the format of the data to be included and the required formatting for it.
 
-
-<br>
-<br>
- To access the Device_xml file, use the command "localhost:[port number]" for your device. A screenshot of the result is shown below: (add in image later)
-
-<br>
-<br>
-  
+ To access the Device_xml file, use the command "localhost:[port number]" for your device. A screenshot of the result is shown below: (add in image later)  
   
   Currently, MTConnect does not support a method to incorporate JPG images into the model, so those had to be collected individually using the command (what is the command????). As well, continous sound collection alongside the other ongoing processes has the potential to overload the collection stream and cause errors in collecting other variables. Therefore, the collected audio stream had an independent adapter designated to a seperate device port of the same IP address. For the study, the MTConnect Adapter was housed on port 5000 and the Sound Adapter was housed on port 5001. 
 
@@ -49,20 +42,12 @@ This repository documents the necessary background, procedures, and code to cond
 
 #### *3.2) Running Agent*
 
-  The Agent needs to be run first on the Raspberry Pi device to allow for the Adapters to work properly. To do this, SSH or VNC into the Raspberry Pi. Then, upload the following code into a file on the Raspberry Pi.
-  <br>
-  (put code here)
-  <br>
-  To run the Agent, open the command line and first use the "cd" command to go into the directory where the "agent" file is stored. Then, use the command "sudo ./agent" to run the Agent.
+  The Agent needs to be run first on the Raspberry Pi device to allow for the Adapters to work properly. To do this, SSH or VNC into the Raspberry Pi. Then, upload the following code into a file on the Raspberry Pi: [Agent_Code](insertcodehere). To run the Agent, open the command line and first use the "cd" command to go into the directory where the "agent" file is stored. Then, use the command "sudo ./agent" to run the Agent. ***{{{ADD IN CODE LATER!!!}}}***
   
 
 #### *3.3) Running Adapters*
 
-  After the Agent is started, the Adapters can be turned on. To do so, upload the following code into a file on your Raspberry Pi.
-  <br>
-  (link codes here)
-  <br>
-  To run the Adapters, use the following commands: "python3 ct_adapter.py" for the current adapter, and "python3 ultimaker_adapter.py" for the machine adapter.
+  After the Agent is started, the Adapters can be turned on. To do so, upload the following code into a file on your Raspberry Pi: [API and Current Adapter Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/API_Current_Collection_Script) and [Ultimaker Machine Data Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/Ultimaker_Adapter.py) . To run the Adapters, use the following commands: "python3 [current_adapter_filename].py" for the current adapter, and "python3 [ultimaker_adapter_filename].py" for the machine adapter.
 
 
 
