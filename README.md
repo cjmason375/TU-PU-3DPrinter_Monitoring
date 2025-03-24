@@ -37,9 +37,7 @@ This repository documents the necessary background, procedures, and code to cond
 
 <br>
 <br>
- To access the Device_xml device, follow this process:
-
- 1) (idk the process so that needs to be inserted)
+ To access the Device_xml file, use the command "localhost:[port number]" for your device. A screenshot of the result is shown below: (add in image later)
 
 <br>
 <br>
@@ -49,83 +47,39 @@ This repository documents the necessary background, procedures, and code to cond
 
   For each stream of data (Visual, Audio, etc.), clients may be required for the proper formatting of the resulting data. These clients are responsible for the collection, formatting, and/or analysis of data from these devices. For each form of data, a specific set of middleware is required, depending on the final state of data analysis desired.  
 
+#### *3.2) Running Agent*
+
+  The Agent needs to be run first on the Raspberry Pi device to allow for the Adapters to work properly. To do this, SSH or VNC into the Raspberry Pi. Then, upload the following code into a file on the Raspberry Pi.
+  <br>
+  (put code here)
+  <br>
+  To run the Agent, open the command line and first use the "cd" command to go into the directory where the "agent" file is stored. Then, use the command "sudo ./agent" to run the Agent.
+  
+
+#### *3.3) Running Adapters*
+
+  After the Agent is started, the Adapters can be turned on. To do so, upload the following code into a file on your Raspberry Pi.
+  <br>
+  (link codes here)
+  <br>
+  To run the Adapters, use the following commands: "python3 ct_adapter.py" for the current adapter, and "python3 ultimaker_adapter.py" for the machine adapter.
+
+
 
 #### 4) *COLLECTING DATA*
 
-(mention how to collect camera and sound data)
+  Finally, it is time to collect data from the machine. To do so, you need to designate a computer to serve as a "collection computer". For our purposes, we used a desktop computer in the research lab to serve as the collection computer. The adapter and camera commands will continously collect data over a specified interval of time, from manually starting the program to stopping the program - however, the team is working on ways to automate this process. The sound command needs the user to estimate the approximate print time so sound data can be recorded over a pre-determined interval, but again, the team is working on ways to automate this process as well.
 
-  
-  
+  ADAPTER DATA: To collect machine and current data through Device_xml, upload the following code onto your collection computer: [Machine_Data_Collector](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/API_Data_Collection_Script). In the code, update the IP address location to the proper coordinates. Also, designate a file location for a CSV file where data can be collected into. Then, you can collect data by running the code in a code interpreter or by using the command line.
 
+  CAMERA DATA: To collect camera data, upload the following code onto your collection computer and repeat the same steps as above: [Camera Collection Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/Camera_Script). However, if you want to collect camera data at a moment through a web browser, use the command localhost:[port] (5000 for our study). (I don't think this is the right command?????
 
-
-
-
-
-### SETTING UP MTCONNECT*
-
-  [MTConnect](https://www.mtconnect.org) offers a robust and versatile system that can be adopted by modern and legacy systems alike. As the industry standard for manufacturing data integration across multiple machines, utilizing MTConnect for aggregating multiple datasets enabled the team to contextualize data while avoiding proprietary formatting. Implementing the free, open-source MTConnect software is not only cost-effective, but also encourages interoperability within factories. Utilizing MTConnect allows further scaling of this project and enables real-time remote monitoring of collected data.
-
-  MTConnect operates based off of two major components: the ***Adapter*** and the ***Agent***. The ***Adapter*** collects the data from the machine and/or sensors, converts it into a text dictionary, and passes that dictionary along to the Agent. In the case study, each data group had its own adapter; a 3D printer adapter that utilized the Swagger API to convert status variables into a MTConnect-compliant format, a current transformer adapter for collecting current data, and a sound stream adapter for collecting sound data. The ***Agent*** takes the dictionary from the Adapter, formats it into a XML stream, and makes that data available on the cloud. In our case study, the Agent uses a HTTP-based REST communication standard. Then, the operator can utilize ***applications*** to fully utilize the MTConnect framework, such as accessing monitoring systems or analytics platforms for conducting further processing and visualization.
-
-  *(In the paper, it was mentioned that "details of the MTConnect Information Model (Device.XML) and its development are listed in the Repository, so Eunseob should add onto this with whatever information he feels necessary")*
-
-  
-
-  A custom MTConnect information model was developed to collect and structure data and extend MTConnect usage to 3D printers and external sensors. To set up MTConnect on your system, you must run three Python scripts on the collection computer (in the study's case, this was a Windows desktop computer) to set up XML documents. A Purdue researcher on our team personally developed these data device models.
-  
-  
-  
-  the following Python scripts are to be run on the Raspberry Pi to collect data. Utilizing a platform that allows VNC or SSH interfacing with the Raspberry Pi reduces the need for an external monitor for the Pi and allows you to control the Pi's interface from another computer. For this study, we used "VNC Viewer", set a static IP address for the Raspberry Pi, and set up the platform using that IP address. 
-
-  (put RPi scripts here once they are uploaded to the GitHub)
-
-  
-  
-  
-  
-  Listed are links to the code for each Adapter, as well as the Agent - these code snippets should be run on the Raspberry Pi. (verify?)
-
-1)  [3D Printer Machine Data Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/API_Data_Collection_Script) <br>
-2)  [Camera Collection Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/Camera_Script) <br>
-3)  [Sound Collection Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/Sound_Collect_Script) <br>
+  SOUND DATA: To collect sound data, upload the following code onto your collection computer and repeat the same steps as above: [Sound Collection Script](https://github.com/cjmason375/TU-PU-3DPrinter_Monitoring/blob/main/Sound_Collect_Script). You can run this command to collect data through the command line using the command "python3 [sound_data_file_name.py] [IP_address:port] [device name] [timezone] [length of each time recording] [total amount of seconds to record]". An example of collecting sound data for a print under 40 minutes in this case study would be "python3 Sound_Collector2.py [IP_address]:5001 UTC 2400 2400".
 
 
-
-
-### *SENSOR SETUP*
-
-  To conduct the case study, the project required data collection. Listed below are the three methods for collecting data for this project:
-
-1) **Machine data** - To collect machine data, the Ultimaker API was utilized to access real-time machine statistics provided by the Ultimkaer S5
-2) **Current data** - To collect current consumption data, a current transformer was installed on the main power cable of the Ultimaker S5 along with an analog-digital converter to read real-time current consumption data
-3) **Sound data** - To collect sound data, a microphone was installed inside of the Ultimaker S5's enclosure to capture operation and idle sounds
-
-  A Raspberry Pi (served as an edge computer?) for this case study and was necessary to connect the sensors and also to deploy the MTConnect framework on.
-
-
-
-
-  
-
-
-
-
-
-
-### *COLLECTING DATA*
-
-(meet w/ Nathon & Diara about how they collected data, align with paper details but give more speficifc and case-by-case example of what to do to pull specific data-item)
-
-Commmands:
-(push, 
-
-### *REAL-TIME MONITORING*
-
-(have Eunseob put in details and link to Grafana web dashboard and explain how it works)
 
 
 ### FUTURE DEVELOPMENT/USAGE
 
-(talk about implementing this technology for creating ML predicitve maintenance model & real-time monitoring and failure detection/classification usage)
+  As this work progresses, we hope to see uses for this technology in real-time monitoring usage and predictive maintenance models. By integrating FDM 3D printers into the industrial world, this work has great room for expansion and can innovate the future of factories.
 
