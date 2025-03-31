@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This is the config file for the MTConnect agent of Ultimaker S5 for PU-TU collaboration.
+MTConnect has several available standards documents detailing correct formatting for dataItems and the config file in general.
+Please refer to the MTConnect standard documentation for more information about how to modify this file. 
+Created by Eunseob Kim on 11/07/2024
+Verified MTConnect standard validation 
+-->
+<MTConnectDevices xmlns:m="urn:mtconnect.org:MTConnectDevices:1.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:mtconnect.org:MTConnectDevices:1.5" xsi:schemaLocation="urn:mtconnect.org:MTConnectDevices:1.5 http://www.mtconnect.org/schemas/MTConnectDevices_1.5.xsd">
+    <Header creationTime="2010-03-04T18:44:40+00:00" sender="localhost" instanceId="1267728234" assetBufferSize="0" assetCount='0' bufferSize="131072" version="1.5" />
+    <Devices>
+        <Device id="ultimakerS5" name="ultimakerS5" uuid="c34efd57-5eb6-4bf1-bd07-b2fc4a15e2d1">
+            <Description manufacturer="Ultimaker" model="S5">Ultimaker S5 3D Printer</Description>
+            <DataItems>
+                <DataItem category="EVENT" id="avail" name="Availability" type="AVAILABILITY"/>
+                <DataItem category="EVENT" id="printerSerial" name="SerialNumber" type="SERIAL_NUMBER">
+                    <Definition>
+                        <Description>system guid /system/guid</Description>
+                    </Definition>
+                </DataItem>    
+                <DataItem category="EVENT" id="dev_asset_chg" type="ASSET_CHANGED"/>
+                <DataItem category="EVENT" id="dev_asset_rem" type="ASSET_REMOVED"/>
+                <DataItem category="SAMPLE" id="ambient_temp" name="AmbientTemp" nativeUnits="CELSIUS" subType="ACTUAL" type="TEMPERATURE" units="CELSIUS">
+                    <Definition>
+                        <Description>Ambient temperature /ambient_temperature/current</Description> 
+                    </Definition>
+                </DataItem>
+                <DataItem category="SAMPLE" id="ct" name="CurrentTransducer" nativeUnits="AMPERE" subType="ACTUAL" type="AMPERAGE" units="AMPERE">
+                    <Definition>
+                        <Description>Current consumption from ADC</Description>
+                    </Definition>
+                </DataItem>
+            </DataItems>
+            <Components>
+                <Auxiliaries id="ext" name="Auxiliaries">
+                    <Components>
+                        <Heating id="bed" name="Bed">
+                            <DataItems>
+                                <DataItem category="EVENT" id="bed_type" name="BedType" type="MATERIAL">
+                                    <Definition>
+                                        <Description>Bed type *glass /printer/bed/type</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="EVENT" id="bed_preheat_state" name="BedPreheatState" type="EQUIPMENT_MODE">
+                                    <Definition>
+                                        <Description>Bed preheat state *false,true /printer/bed/pre_heat/active</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="SAMPLE" id="bed_current_temp" name="BedCurrentTemp" nativeUnits="CELSIUS" subType="ACTUAL" type="TEMPERATURE" units="CELSIUS">
+                                    <Definition>
+                                        <Description>Bed current temperature #float /printer/bed/temperature/current</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="SAMPLE" id="bed_target_temp" name="BedTargetTemp" nativeUnits="CELSIUS" subType="ACTUAL" type="TEMPERATURE" units="CELSIUS">
+                                    <Definition>
+                                        <Description>Bed target temperature #float /printer/bed/temperature/target</Description>
+                                    </Definition>
+                                </DataItem>
+                            </DataItems>
+                        </Heating>
+                        <Heating id="extruder0" name="Extruder0">
+                            <DataItems>
+                                <DataItem category="SAMPLE" id="ext0_current_temp" name="Ext0CurrentTemp" nativeUnits="CELSIUS" subType="ACTUAL" type="TEMPERATURE" units="CELSIUS">
+                                    <Definition>
+                                        <Description>Extruder0 (maybe main extruder?) current temperature #float /printer/heads/0/extruders/0/temperature/current</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="SAMPLE" id="ext0_target_temp" name="Ext0TargetTemp" nativeUnits="CELSIUS" subType="ACTUAL" type="TEMPERATURE" units="CELSIUS">
+                                    <Definition>
+                                        <Description>Extruder0 (maybe main extruder?) target temperature #float /printer/heads/0/extruders/0/temperature/target</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="EVENT" id="ext0_material" name="Ext0Material" type="MATERIAL">
+                                    <Definition>
+                                        <Description>Extruder0 active material GUID /printer/heads/0/extruders/0/active_material/GUID</Description>
+                                    </Definition>
+                                </DataItem>
+                            </DataItems>
+                        </Heating>
+                        <Heating id="extruder1" name="Extruder1">
+                            <DataItems>
+                                <DataItem category="SAMPLE" id="ext1_current_temp" name="Ext1CurrentTemp" nativeUnits="CELSIUS" subType="ACTUAL" type="TEMPERATURE" units="CELSIUS">
+                                    <Definition>
+                                        <Description>Extruder1 (maybe main extruder?) current temperature #float /printer/heads/0/extruders/1/temperature/current</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="SAMPLE" id="ext1_target_temp" name="Ext1TargetTemp" nativeUnits="CELSIUS" subType="ACTUAL" type="TEMPERATURE" units="CELSIUS">
+                                    <Definition>
+                                        <Description>Extruder1 (maybe main extruder?) target temperature #float /printer/heads/0/extruders/1/temperature/target</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="EVENT" id="ext1_material" name="Ext1Material" type="MATERIAL">
+                                    <Definition>
+                                        <Description>Extruder1 active material GUID /printer/heads/0/extruders/1/active_material/GUID</Description>
+                                    </Definition>
+                                </DataItem>
+                            </DataItems>
+                        </Heating>
+                        <Fan id="fan" name="Fan">
+                            <DataItems>
+                                <DataItem category="SAMPLE" id="fan_load" name="FAN_LOAD" nativeUnits="PERCENT" type="LOAD" units="PERCENT">
+                                    <Definition>
+                                        <Description>Head fan speed load 0-100 scale /printer/heads/0/fan</Description>
+                                    </Definition>
+                                </DataItem>
+                            </DataItems>
+                        </Fan>
+                    </Components>
+                </Auxiliaries>
+                <Axes id="ax" name="Axes">
+                    <Components>
+                        <Linear id="x" name="X">
+                            <DataItems>
+                                <DataItem category="SAMPLE" id="xpos" name="Xpos" subType="ACTUAL" type="PATH_POSITION" units="MILLIMETER_3D">
+                                    <Definition>
+                                        <Description>head position x-axis in mm /printer/heads/0/position/x</Description>
+                                    </Definition>
+                                </DataItem>
+                            </DataItems>
+                        </Linear>
+                        <Linear id="y" name="Y">
+                            <DataItems>
+                                <DataItem category="SAMPLE" id="ypos" name="Ypos" subType="ACTUAL" type="PATH_POSITION" units="MILLIMETER_3D">
+                                    <Definition>
+                                        <Description>head position y-axis in mm /printer/heads/0/position/y</Description>
+                                    </Definition>
+                                </DataItem>
+                            </DataItems>
+                        </Linear>
+                        <Linear id="z" name="Z">
+                            <DataItems>
+                                <DataItem category="SAMPLE" id="zpos" name="Zpos" subType="ACTUAL" type="PATH_POSITION" units="MILLIMETER_3D">
+                                    <Definition>
+                                        <Description>head position z-axis in mm /printer/heads/0/position/z</Description>
+                                    </Definition>
+                                </DataItem>
+                            </DataItems>
+                        </Linear>                        
+                    </Components>
+                </Axes>
+                <Controller id="ctrl" name="Controller">
+                    <DataItems>
+                        <DataItem category="SAMPLE" id="led_brightness" name="LedBrightness" nativeUnits="PERCENT" type="LOAD" units="PERCENT">
+                            <Definition>
+                                <Description>Led brightness 0-100 scale /printer/led/brightness</Description>
+                            </Definition>
+                        </DataItem>
+                        <DataItem category="EVENT" id="status" name="Status" type="CONTROLLER_MODE">
+                            <Definition>
+                                <Description>Printer status ['booting','waiting_for_peripherals','idle','printing','error','maintenance'] /printer/status</Description>
+                            </Definition>
+                        </DataItem>
+                        <DataItem category="SAMPLE" id="up_time" name="UpTime" type="ACCUMULATED_TIME" units="SECOND">
+                            <Definition>
+                                <Description>Machine up time (accumulated) /system/uptime</Description>
+                            </Definition>
+                        </DataItem>
+                    </DataItems>
+                    <Components>
+                        <Path id="p" name="Path">
+                            <DataItems>
+                                <DataItem category="EVENT" id="program" name="Program" subType="ACTIVE" type="PROGRAM">
+                                    <Definition>
+                                        <Description>Reference to internal filename of the .gcode or .ufp part program currently executing on the machine /print_job/name</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="EVENT" id="print_state" name="PrintState" type="PROCESS_STATE">
+                                    <Definition>
+                                        <Description>Machine execution (state) ['none', 'printing', 'pausing', 'paused', 'resuming', 'pre_print', 'post_print', 'wait_cleanup', 'wait_user_action'] /printer/print_job/state</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="EVENT" id="print_result" name="PrintResult" type="FUNCTIONAL_MODE">
+                                    <Definition>
+                                        <Description>Machine functional mode (result) ['Failed', 'Aborted', 'Finished'] /print_job/result</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="EVENT" id="datetime_started" name="DatetimeStarted" subType="START" type="PROCESS_TIME">
+                                    <Definition>
+                                        <Description>Start time of current operation /print_job/datetime_started</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="EVENT" id="datetime_finished" name="DatetimeFinished" subType="COMPLETE" type="PROCESS_TIME">
+                                    <Definition>
+                                        <Description>Start time of current operation /print_job/datetime_started</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="SAMPLE" id="est_time" name="EstimatedTime" nativeUnits="SECOND" subType="OPERATING" type="EQUIPMENT_TIMER" units="SECOND">
+                                    <Definition>
+                                        <Description>Estimated time of current operation /print_job/time_estimated</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="SAMPLE" id="elap_time" name="ElapsedTime" nativeUnits="SECOND" subType="OPERATING" type="EQUIPMENT_TIMER" units="SECOND">
+                                    <Definition>
+                                        <Description>Elapsed time of current operation /print_job/time_elapsed</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="SAMPLE" id="total_time" name="TotalTime" nativeUnits="SECOND" subType="OPERATING" type="EQUIPMENT_TIMER" units="SECOND">
+                                    <Definition>
+                                        <Description>Total time of current operation /print_job/time_total</Description>
+                                    </Definition>
+                                </DataItem>
+                                <DataItem category="SAMPLE" id="progress" name="Progress" nativeUnits="PERCENT" type="LOAD" units="PERCENT">
+                                    <Definition>
+                                        <Description>Progress 0-100% (should multiply 100) natively 0-1 /print_job/progress</Description>
+                                    </Definition>
+                                </DataItem>
+                            </DataItems>
+                        </Path>
+                    </Components>
+                </Controller>
+            </Components>
+        </Device>
+    </Devices>
+</MTConnectDevices>
